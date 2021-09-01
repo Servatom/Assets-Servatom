@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  assets:
+    image: assets
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - /var/www/assets:/app/assets
+      - ./database:/app/database
+    environment:
+      - SECRET_KEY=4b3d1e89aa36815b5bb795b68c984136baea556a612876900fcac15d258fc375
