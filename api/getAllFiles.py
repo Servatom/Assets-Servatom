@@ -1,5 +1,5 @@
 import os
-from commonClasses import FileClass
+from api.commonClasses import FileClass
 
 directory_parent = "/var/www/assets/"
 

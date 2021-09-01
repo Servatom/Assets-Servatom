@@ -3,10 +3,10 @@ from fastapi.responses import FileResponse
 import aiofiles
 from fastapi.templating import Jinja2Templates
 import os
-from getAllFiles import *
+from api.getAllFiles import *
 import shutil
-from commonClasses import *
-from security import *
+from api.commonClasses import *
+from api.security import *
 import models.models as models
 from sqlalchemy.orm import Session
 from models.database import SessionLocal, engine
