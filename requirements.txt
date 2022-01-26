@@ -12,8 +12,9 @@ dnspython==1.16.0
 ecdsa==0.17.0
 eventlet==0.31.1
 falcon==3.0.1
-fastapi==0.68.0
 Flask==2.0.1
+Flask-Cors==3.0.10
+gevent==21.12.0
 greenlet==1.1.1
 gunicorn==20.1.0
 h11==0.12.0
@@ -40,3 +41,5 @@ typing-extensions==3.10.0.0
 urllib3==1.26.6
 uvicorn==0.15.0
 Werkzeug==2.0.1
+zope.event==4.5.0
+zope.interface==5.4.0

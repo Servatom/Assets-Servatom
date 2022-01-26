@@ -1,13 +1,6 @@
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from pydantic import BaseModel
-from dotenv import load_dotenv
 import os
-load_dotenv()
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # run openssl rand -hex 32
 # get key from dotenv
@@ -16,14 +9,6 @@ ALGORITHM = "HS256"
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-
-class TokenData(BaseModel):
-    username: str = None
-    
 def verify_passwd(plain_passwd, hashed_passwd):
     return pwd_context.verify(plain_passwd, hashed_passwd)
 
@@ -37,29 +22,20 @@ def create_access_token(user_id):
     :return:
     """
     payload = {
-        "sub": user_id,
+        "sub": user_id
     }
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    user = ""
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            user = None
-            raise credentials_exception
-        token_data = TokenData(username=username)
-    except JWTError:
-        raise credentials_exception
-    if user is None:
-        raise credentials_exception
-    return user
+def get_user_id(token):
+    """
+    Get user id from token
+    :param token:
+    :return:
+    """
+    payload = verify_token(token)
+    if payload:
+        return payload.get("sub")
+    return None
 
 def verify_token(token):
     """
@@ -72,3 +48,12 @@ def verify_token(token):
     except JWTError:
         return None
     return payload.get("sub")
+
+"""
+password = "raghav123"
+hashed_password = hashMe(password)
+# create access token 
+access_token = create_access_token("raghavTinker")
+print(access_token)
+print(verify_token(access_token))
+"""

@@ -1,7 +1,17 @@
 import os
-from api.commonClasses import FileClass
 
-directory_parent = "/var/www/assets/"
+url = os.getenv('API_URL')
+class FileClass:
+    url = ""
+    def __init__(self, title, isFolder):
+        self.title = title
+        self.isFolder = isFolder
+    
+    def serialize(self):
+        return {
+            'url': url + self.title,
+            'isFolder': self.isFolder
+        }
 
 def getFiles(directory):
     # get all immediate sub directories and files in the directory
@@ -12,4 +22,7 @@ def getFiles(directory):
             items.append(FileClass(name, isFolder=True))
         else:
             items.append(FileClass(name, isFolder=False))
-    return items
+    result = []
+    for item in items:
+        result.append(item.serialize())
+    return result

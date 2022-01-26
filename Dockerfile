@@ -12,7 +12,7 @@ COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
-COPY . /app
+COPY ./api /app
 RUN mkdir assets
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
@@ -21,4 +21,4 @@ RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /
 USER root:root
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["python", "serv.py"]
+CMD ["sh", "run.sh"]
