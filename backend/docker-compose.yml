@@ -14,5 +14,6 @@ services:
     environment:
       - SECRET_KEY=<SECRET_KEY>
       - SIGNUP=True
+      - API_URL=https://assets.servatom.com/
     
     restart: always
