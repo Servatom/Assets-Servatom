@@ -32,7 +32,6 @@ def login():
         if verify_passwd(password, user.password):
             # get access_token for user
             access_token = create_access_token(username)
-            print(access_token)
             return {"access_token": access_token}, 200
         else:
             return {"message": "Incorrect password"}, 401
