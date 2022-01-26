@@ -7,7 +7,6 @@ from werkzeug.utils import secure_filename
 from security import *
 app = Flask(__name__)
 
-domain = "https://assets.servatom.com"
 parent = "assets"
 
 models.Base.metadata.create_all(bind=engine)
