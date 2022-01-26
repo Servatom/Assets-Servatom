@@ -74,6 +74,7 @@ def getFile(path):
         # check if its a file or folder
         if os.path.isdir(os.path.join(parent, path)):
             # this is a folder
+            print(os.path.join(parent, path))
             allFiles = getFiles(os.path.join(parent, path))
             return jsonify(allFiles)
         elif os.path.isfile(os.path.join(parent, path)):

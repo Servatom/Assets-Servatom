@@ -14,14 +14,20 @@ class FileClass:
         }
 
 def getFiles(directory):
+    print(directory)
+    # remove 'assets/' from directory
+    url_dir = ""
+    if "assets/" in directory:
+        url_dir = directory[7:] + "/"
+    print(url_dir)
     # get all immediate sub directories and files in the directory
     items = []
     for name in os.listdir(directory):
         if os.path.isdir(os.path.join(directory, name)):
             # replace / with % in name
-            items.append(FileClass(name, isFolder=True))
+            items.append(FileClass(url_dir + name, isFolder=True))
         else:
-            items.append(FileClass(name, isFolder=False))
+            items.append(FileClass(url_dir + name, isFolder=False))
     result = []
     for item in items:
         result.append(item.serialize())
