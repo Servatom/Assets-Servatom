@@ -5,6 +5,13 @@ from database import SessionLocal, engine
 from getAllFiles import *
 from werkzeug.utils import secure_filename
 from security import *
+import requests
+import datetime
+import pyqrcode
+import png
+from pyqrcode import QRCode
+from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
 
 parent = "assets"
@@ -13,6 +20,7 @@ models.Base.metadata.create_all(bind=engine)
 db = SessionLocal()
 
 @app.route("/login", methods=["POST"])
+@cross_origin()
 def login():
     if request.method == "POST":
         # get credentials
@@ -36,6 +44,7 @@ def login():
             return {"message": "Incorrect password"}, 401
 
 @app.route("/register", methods=["POST"])
+@cross_origin()
 def register():
     # check if registeration allowed
     signup = os.environ.get("SIGNUP")
@@ -61,12 +70,14 @@ def register():
         return {"message": "User created"}, 201
 
 @app.route("/")
+@cross_origin()
 def index():
     allFiles = getFiles(parent)
     return jsonify(allFiles)
 
 # file path
 @app.route("/<path:path>", methods=["GET", "POST", "DELETE", "PUT"])
+@cross_origin()
 def getFile(path):
     # if request is get
     if request.method == "GET":
