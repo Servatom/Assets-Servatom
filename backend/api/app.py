@@ -5,11 +5,6 @@ from database import SessionLocal, engine
 from getAllFiles import *
 from werkzeug.utils import secure_filename
 from security import *
-import requests
-import datetime
-import pyqrcode
-import png
-from pyqrcode import QRCode
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
